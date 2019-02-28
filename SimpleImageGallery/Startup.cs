@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleImageGallery.Data;
 
 namespace SimpleImageGallery
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment _appHost;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment appHost)
         {
             Configuration = configuration;
+            _appHost = appHost;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,8 +36,11 @@ namespace SimpleImageGallery
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddEntityFrameworkSqlite()
+                .AddDbContext<SimpleImageGalleryDbContext>(
+                    options => { options.UseSqlite($"Data Source={_appHost.ContentRootPath}/SimpleImageGallery.db"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
