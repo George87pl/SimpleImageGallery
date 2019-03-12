@@ -1,20 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
+using SimpleImageGallery.Data;
+using SimpleImageGallery.Data.Models;
 using SimpleImageGallery.Models;
 
 namespace SimpleImageGallery.Controllers
 {
     public class ImageController : Controller
     {
+        private readonly IImage _image;
+
+        public ImageController(IImage image)
+        {
+            _image = image;
+        }
+
         public IActionResult Upload()
         {
-            var model = new UploadImageModel();
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult UploadNewImage()
+        [ValidateAntiForgeryToken]
+        public IActionResult Upload(UploadImageModel uploadImageModel)
         {
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                var image = new GalleryImage
+                {
+                    Title = uploadImageModel.Title,
+                    Tags = uploadImageModel.Tags.Split(",").Select(tag => new ImageTag
+                    {
+                        Description = tag
+                    }).ToList()
+                };
+
+                _image.AddImage(image);
+                return RedirectToAction("Upload");
+            }
+
+            return View(uploadImageModel);
         }
     }
 }

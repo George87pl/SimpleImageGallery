@@ -23,7 +23,7 @@ namespace SimpleImageGallery.Services
 
         public GalleryImage GetById(int id)
         {
-            //return GetAll().Where(img => img.Id == id).First();
+            //return GetAll().Where(img => img.Id == id).First();           //pobiera wszystkie pasujące, ale dzięki First(); zwracja pierwszy
             return GetAll().FirstOrDefault(img => img.Id == id);
         }
 
@@ -32,6 +32,32 @@ namespace SimpleImageGallery.Services
             return GetAll()
                 .Where(img => img.Tags
                     .Any(t => t.Description == tag));
+        }
+
+        public void AddImage(GalleryImage image)
+        {
+            _dbContext.GalleryImages.Add(image);
+            _dbContext.SaveChanges();
+        }
+
+        public void EditImage(GalleryImage image)
+        {
+            _dbContext.GalleryImages.Update(image);
+            _dbContext.SaveChanges();
+        }
+
+        public void DeleteImage(GalleryImage image)
+        {
+            _dbContext.GalleryImages.Remove(image);
+            _dbContext.SaveChanges();
+        }
+
+        public List<ImageTag> ParseTags(string tags)
+        {
+            return tags.Split(",").Select(tag => new ImageTag
+            {
+                Description = tag
+            }).ToList();
         }
     }
 }

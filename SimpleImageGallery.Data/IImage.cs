@@ -8,5 +8,9 @@ namespace SimpleImageGallery.Data
         IEnumerable<GalleryImage> GetAll();
         IEnumerable<GalleryImage> GetWithTag(string tag);
         GalleryImage GetById(int id);
+
+        void AddImage(GalleryImage image);
+        void EditImage(GalleryImage image);
+        void DeleteImage(GalleryImage image);
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleImageGallery.Data;
-using SimpleImageGallery.Data.Models;
 using SimpleImageGallery.Models;
+using System.Linq;
 
 namespace SimpleImageGallery.Controllers
 {
