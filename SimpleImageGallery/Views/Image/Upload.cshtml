@@ -17,14 +17,14 @@
                     <div>
                         <label class="btn btn-secondary active">
                             Browse for Image
-                            <input type="file" name="file" style="display: none"/>
+                            <input type="file" name="ImageUpload" style="display: none" />
+                            <span asp-validation-for="ImageUpload" class="text-danger"></span>
                         </label>
                     </div>
                     <div>
                         <button type="submit" id="btn-upload" class="btn btn-info">
                             Submit
                         </button>
-                        <span asp-validation-for="ImageUpload" class="text-danger"></span>
                     </div>
                 </form>
             </div>
