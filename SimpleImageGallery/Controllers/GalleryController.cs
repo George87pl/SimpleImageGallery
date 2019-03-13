@@ -17,11 +17,27 @@ namespace SimpleImageGallery.Controllers
         public IActionResult Index()
         {
             var imageList = _imageService.GetAll();
+            var tags = _imageService.GetTags();
 
             var model = new GalleryIndexModel()
             {
                 Images = imageList,
-                SearchQuery = ""
+                Tags = tags,                
+            };
+
+            return View(model);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Index(string id)
+        {
+            var imageList = _imageService.GetWithTag(id);
+            var tags = _imageService.GetTags();
+
+            var model = new GalleryIndexModel()
+            {
+                Images = imageList,
+                Tags = tags,
             };
 
             return View(model);

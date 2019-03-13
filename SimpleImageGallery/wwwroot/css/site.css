@@ -71,6 +71,10 @@ html {
     text-align: left;
 }
 
+.tag-btn {
+    margin: 3px;
+}
+
 .image-detail {
     padding: 12px;
     border-radius: 2px;

@@ -59,5 +59,10 @@ namespace SimpleImageGallery.Services
                 Description = tag
             }).ToList();
         }
+
+        public IEnumerable<ImageTag> GetTags()
+        {
+            return _dbContext.ImageTags.Distinct();
+        }
     }
 }

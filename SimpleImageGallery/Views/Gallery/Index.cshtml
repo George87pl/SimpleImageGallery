@@ -1,6 +1,15 @@
 ﻿@model SimpleImageGallery.Models.GalleryIndexModel
 
 <div class="container">
+    <div class="row">
+        <div class="col-12">
+            @foreach (var tag in Model.Tags)
+            {
+                <button asp-controller="Gallery" asp-action="Index" asp-route-id="@tag.Description" class="btn btn-primary float-right tag-btn">@tag.Description</button>
+
+            }
+        </div>
+    </div>
     <div class="row gallery-content">
         @foreach (var image in Model.Images)
         {
